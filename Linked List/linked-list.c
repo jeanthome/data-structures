@@ -5,21 +5,23 @@
 * Estrutura de um nó da lista. 
 */
 typedef struct Node {
-  int value;
-  struct Node * next;
+  int value;                /* Valor salvo no nó. */
+  struct Node * next;       /* Ponteiro para o próximo elemento da lista. */
 } Node;
 
 /**
 * Estrutura que define a lista ligada. 
 */
 typedef struct LinkedList {
-    unsigned int size;
-    Node * head;
+    unsigned int size;      /* Tamanho da lista. */
+    Node * head;            /* Ponteiro para o início da lista. */
+    Node * tail;            /* Ponteiro para o final da lista. */
 } LinkedList;
 
 LinkedList * build_linked_list();
 Node * get_node();
 LinkedList * add(LinkedList * l, int value);
+LinkedList * addAtBeginning(LinkedList * l, int value);
 void print(LinkedList * l);
 
 int main(int argc, char const *argv[]) { 
@@ -27,7 +29,7 @@ int main(int argc, char const *argv[]) {
   LinkedList *list = build_linked_list();
 
   for (int i = 0; i < 20; i++) {
-    list = add(list, i);
+    list = addAtBeginning(list, i);
   }
   print(list);
   return 0;
@@ -41,6 +43,7 @@ LinkedList * build_linked_list () {
   LinkedList *list = (LinkedList*)malloc(sizeof(LinkedList));
   list->size = 0;
   list->head = NULL;
+  list->tail = NULL;
   return list;
 }
 
@@ -68,12 +71,34 @@ LinkedList * add(LinkedList * l, int value) {
 
   if ( l->head == NULL ) {
     l->head = new;
+    l->tail = new;
   } else {
-    node = l->head;
-    while (node->next != NULL) {
-      node = node->next;
-    }
-    node->next = new;
+    l->tail->next = new;
+    l->tail = new;
+  }
+  
+  l->size++;
+  return l;
+}
+
+/**
+* Adiciona um novo elemento no início da lista.
+* @param l Ponteiro para a lista onde o novo elemento será adicionado.
+* @param value O valor a ser adicionado.
+* @return Ponteiro para a lista onde o novo elemento foi adicionado.
+*/
+LinkedList * addAtBeginning(LinkedList * l, int value) {
+  Node *node, *new;
+  
+  new = get_node();
+  new->value = value;
+
+  if ( l->head == NULL ) {
+    l->head = new;
+    l->tail = new;
+  } else {
+    new->next = l->head;
+    l->head = new;
   }
   
   l->size++;
