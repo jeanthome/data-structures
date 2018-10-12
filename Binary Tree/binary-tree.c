@@ -38,6 +38,9 @@ int main(int argc, char const *argv[]) {
   return 0;
 }
 
+/**
+ * Constrói a árvore binária.
+ */
 Tree *build_binary_tree() {
   Tree *new = (Tree *)malloc(sizeof(Tree));
   new->size = 0;
@@ -45,6 +48,11 @@ Tree *build_binary_tree() {
   return new;
 }
 
+/**
+ * Aloca memória para um novo nó da árvore.
+ * @param value O conteúdo armazenado no novo nó.
+ * @return Ponteiro para o nó criado.
+ */
 Node *get_node(int value) {
   Node *new = (Node *)malloc(sizeof(Node));
   new->value = value;
@@ -52,6 +60,11 @@ Node *get_node(int value) {
   return new;
 }
 
+/**
+ * Adiciona um novo nó na árvore.
+ * @param t Ponteiro para a árvore onde o novo nó será inserido.
+ * @param value O conteúdo a ser armazenado no novo nó.
+ */
 Tree *add(Tree *t, int value) {
   Node *new = get_node(value);
   Node *iterator, *previous;

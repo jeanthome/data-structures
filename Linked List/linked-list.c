@@ -65,6 +65,7 @@ LinkedList *build_linked_list() {
 
 /**
  * Aloca memória para um novo nó na lista.
+ * @param value O conteúdo armazenado no novo nó.
  * @return Ponteiro para o nó criado.
  */
 Node *get_node(int value) {
