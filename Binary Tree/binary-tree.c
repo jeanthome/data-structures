@@ -22,6 +22,9 @@ typedef struct Tree {
 Tree *build_binary_tree();
 Node *get_node(int value);
 Tree *add(Tree *t, int value);
+void pre_order(Node *node);
+void in_order(Node *node);
+void post_order(Node *node);
 
 int main(int argc, char const *argv[]) {
   Tree *tree = build_binary_tree();
@@ -35,6 +38,14 @@ int main(int argc, char const *argv[]) {
   tree = add(tree, 7);
   tree = add(tree, 10);
 
+  pre_order(tree->root);
+  printf("\n");
+
+  in_order(tree->root);
+  printf("\n");
+
+  post_order(tree->root);
+  printf("\n");
   return 0;
 }
 
@@ -99,11 +110,47 @@ Tree *add(Tree *t, int value) {
       previous->right = new;
       printf("Valor %d inserido na direita do %d.\n", value, previous->value);
     } else {
-      printf("Valor %d ja existente.\n", value);
+      printf("Valor %d já existente.\n", value);
       t->size--;
       free(new);
     }
   }
 
   return t;
+}
+
+/**
+ * Percorre a árvore binária em pré-ordem.
+ * @param node Ponteiro para o nó sendo visitado atualmente na recursão.
+ */
+void pre_order(Node *node) {
+  if (node != NULL) {
+    printf("%d ", node->value);
+    pre_order(node->left);
+    pre_order(node->right);
+  }
+}
+
+/**
+ * Percorre a árvore binária em ordem.
+ * @param node Ponteiro para o nó sendo visitado atualmente na recursão.
+ */
+void in_order(Node *node) {
+  if (node != NULL) {
+    in_order(node->left);
+    printf("%d ", node->value);
+    in_order(node->right);
+  }
+}
+
+/**
+ * Percorre a árvore binária em pós-ordem.
+ * @param node Ponteiro para o nó sendo visitado atualmente na recursão.
+ */
+void post_order(Node *node) {
+  if (node != NULL) {
+    post_order(node->left);
+    post_order(node->right);
+    printf("%d ", node->value);
+  }
 }
