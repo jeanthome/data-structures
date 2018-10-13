@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -25,6 +26,7 @@ Tree *add(Tree *t, int value);
 void pre_order(Node *node);
 void in_order(Node *node);
 void post_order(Node *node);
+bool find(Tree *t, int value);
 
 int main(int argc, char const *argv[]) {
   Tree *tree = build_binary_tree();
@@ -153,4 +155,25 @@ void post_order(Node *node) {
     post_order(node->right);
     printf("%d ", node->value);
   }
+}
+
+/**
+ * Verifica a existência de um determinado valor na árvore.
+ * @param t Ponteiro para a árvore onde a busca será realizada.
+ * @param value O valor a ser buscado na árvore.
+ * @return true caso o valor buscado esteja na árvore, false caso contrário.
+ */
+bool find(Tree *t, int value) {
+  Node *iterator = t->root;
+
+  while (iterator != NULL) {
+    if (iterator->value == value) {
+      return true;
+    } else if (value < iterator->value) {
+      iterator = iterator->left;
+    } else {
+      iterator = iterator->right;
+    }
+  }
+  return false;
 }
